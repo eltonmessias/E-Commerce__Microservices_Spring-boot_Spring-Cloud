@@ -1,0 +1,19 @@
+server:
+  port: 8050
+datasource:
+  url: jdbc:postgresql://localhost:5432/product_ecom_ms
+  username: eltonmessias
+  password: messias8669
+  driver-class-name: org.postgresql.Driver
+jpa:
+  hibernate:
+    ddl-auto: validate
+  database: postgresql
+  database-platform: org.hibernate.dialect.PostgresDialect
+flyway:
+  baseline-on-migrate: true
+  enabled: true
+  baseline-description: "init"
+  baseline-version: 0
+  user: ${spring.datasource.username}
+  password: ${spring.datasource.password}
