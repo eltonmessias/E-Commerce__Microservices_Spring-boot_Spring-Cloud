@@ -2,6 +2,7 @@ package com.eltonmessias.ecommerce.product;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,5 +35,13 @@ public class ProductController {
             (@RequestBody @Valid ProductRequest request, @PathVariable("product-id") Long productId)
     {
         return ResponseEntity.ok(service.updateProduct(request, productId));
+    }
+
+
+    @GetMapping("/purchase")
+    public ResponseEntity<List<ProductPurchaseResponse>> purchaseProducts(
+            @RequestBody List<ProductPurchaseRequest> request
+    ) {
+        return new ResponseEntity<>(HttpStatus.OK, service.purchaseProducts(request));
     }
 }
