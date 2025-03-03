@@ -24,8 +24,15 @@ public class ProductController {
         return ResponseEntity.ok(service.findAll());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ProductResponse> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(service.findProductById(id));
+    @GetMapping("/{product-id}")
+    public ResponseEntity<ProductResponse> findById(@PathVariable("product-id") Long productId) {
+        return ResponseEntity.ok(service.findProductById(productId));
+    }
+
+    @PutMapping("/{product-id}")
+    public ResponseEntity<ProductResponse> updateProduct
+            (@RequestBody @Valid ProductRequest request, @PathVariable("product-id") Long productId)
+    {
+        return ResponseEntity.ok(service.updateProduct(request, productId));
     }
 }
