@@ -1,6 +1,7 @@
 package com.eltonmessias.ecommerce.product;
 
 import jakarta.validation.Valid;
+import jakarta.ws.rs.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +22,11 @@ public class ProductService {
 
     public List<ProductResponse> findAll() {
         return repository.findAll().stream().map(mapper::toProductResponse).collect(Collectors.toList());
+    }
+
+
+    public ProductResponse findProductById(Long id) {
+        var product = repository.findById(id).orElseThrow(() -> new NotFoundException("Product not found"));
+        return mapper.toProductResponse(product);
     }
 }
