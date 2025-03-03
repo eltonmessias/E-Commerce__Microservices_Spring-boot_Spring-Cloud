@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -18,7 +20,7 @@ public class Product {
     private long id;
     private String name;
     private String description;
-    private double price;
+    private BigDecimal price;
     private int availableQuantity;
     @ManyToOne
     @JoinColumn(name = "category_id")

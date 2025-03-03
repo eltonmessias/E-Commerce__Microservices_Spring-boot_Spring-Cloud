@@ -6,6 +6,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
+import java.math.BigDecimal;
+
 public record ProductRequest(
         Long id,
         @NotNull(message = "Product name is required")
@@ -13,7 +15,7 @@ public record ProductRequest(
         @NotNull(message = "Product description is required")
         String description,
         @Positive(message = "Price should be positive")
-        double price,
+        BigDecimal price,
         @Positive(message = "Available quantity should be positive")
         Integer availableQuantity,
         @NotNull(message = "Product category is required")
