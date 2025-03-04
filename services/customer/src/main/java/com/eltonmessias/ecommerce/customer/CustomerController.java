@@ -20,7 +20,7 @@ public class CustomerController {
         return new ResponseEntity<>(service.createCustomer(request), HttpStatus.CREATED);
     }
 
-    @PostMapping
+    @GetMapping
     public ResponseEntity<List<CustomerResponse>> findAllCustomers() {
         return ResponseEntity.ok(service.findAllCustomers());
     }
