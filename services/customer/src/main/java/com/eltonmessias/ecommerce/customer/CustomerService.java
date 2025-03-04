@@ -49,4 +49,9 @@ public class CustomerService {
             customer.setAddress(request.address());
         }
     }
+
+    public void deleteCustomer(String customerId) {
+        var customer = repository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException("Customer does not exists"));
+        repository.delete(customer);
+    }
 }
