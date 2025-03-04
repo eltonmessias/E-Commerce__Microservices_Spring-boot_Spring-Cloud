@@ -29,4 +29,11 @@ public class CustomerController {
     public ResponseEntity<CustomerResponse> findCustomerById(@PathVariable("customer-id") String customerId) {
         return ResponseEntity.ok(service.findCustomerById(customerId));
     }
+
+    @PutMapping("/{customer-id}")
+    public ResponseEntity<CustomerResponse> updateCustomer
+            (@RequestBody @Valid CustomerRequest request, @PathVariable("customer-id") String customerId)
+    {
+        return ResponseEntity.ok(service.updateCustomer(request, customerId));
+    }
 }

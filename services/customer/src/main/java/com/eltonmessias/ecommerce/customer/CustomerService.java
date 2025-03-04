@@ -3,6 +3,7 @@ package com.eltonmessias.ecommerce.customer;
 import com.eltonmessias.ecommerce.exception.CustomerNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
@@ -26,5 +27,26 @@ public class CustomerService {
     public CustomerResponse findCustomerById(String customerId) {
         var customer = repository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException("Customer does not exists!"));
         return mapper.fromCustomer(customer);
+    }
+
+    public CustomerResponse updateCustomer(@Valid CustomerRequest request, String customerId) {
+        var customer = repository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException("Customer does not exists!"));
+        mergeCustomer(customer, request);
+        repository.save(customer);
+        return mapper.fromCustomer(customer);
+    }
+    private void mergeCustomer(Customer customer, @Valid CustomerRequest request) {
+        if (StringUtils.isNotBlank(request.firstname())) {
+            customer.setFirstname(request.firstname());
+        }
+        if (StringUtils.isNotBlank(request.lastname())) {
+            customer.setLastname(request.lastname());
+        }
+        if (StringUtils.isNotBlank(request.email())) {
+            customer.setEmail(request.email());
+        }
+        if (request.address() != null) {
+            customer.setAddress(request.address());
+        }
     }
 }
