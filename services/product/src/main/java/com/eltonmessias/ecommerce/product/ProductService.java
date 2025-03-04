@@ -75,4 +75,8 @@ public class ProductService {
         return purchasedProducts;
     }
 
+    public void deleteProduct(Long productId) {
+        var product = repository.findById(productId).orElseThrow(() -> new ProductNotFoundException("Product not found"));
+        repository.delete(product);
+    }
 }

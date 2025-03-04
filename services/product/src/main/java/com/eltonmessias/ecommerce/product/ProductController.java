@@ -37,6 +37,12 @@ public class ProductController {
         return ResponseEntity.ok(service.updateProduct(request, productId));
     }
 
+    @DeleteMapping("/{product-id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable("product-id") Long productId) {
+        service.deleteProduct(productId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 
     @GetMapping("/purchase")
     public ResponseEntity<List<ProductPurchaseResponse>> purchaseProducts(
