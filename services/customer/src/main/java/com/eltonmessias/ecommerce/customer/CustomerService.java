@@ -1,5 +1,6 @@
 package com.eltonmessias.ecommerce.customer;
 
+import com.eltonmessias.ecommerce.exception.CustomerNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,5 +21,10 @@ public class CustomerService {
 
     public List<CustomerResponse> findAllCustomers() {
         return repository.findAll().stream().map(mapper::fromCustomer).collect(Collectors.toList());
+    }
+
+    public CustomerResponse findCustomerById(String customerId) {
+        var customer = repository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException("Customer does not exists!"));
+        return mapper.fromCustomer(customer);
     }
 }
