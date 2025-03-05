@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -19,7 +20,7 @@ public class ProductController {
 
 
     @PostMapping
-    public ResponseEntity<Long> createProduct(@RequestBody @Valid ProductRequest request){
+    public ResponseEntity<UUID> createProduct(@RequestBody @Valid ProductRequest request){
         return ResponseEntity.ok(service.createProduct(request));
     }
 

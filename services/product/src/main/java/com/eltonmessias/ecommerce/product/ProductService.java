@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,7 +21,7 @@ public class ProductService {
     private final ProductRepository repository;
     private final ProductMapper mapper;
 
-    public Long createProduct(@Valid ProductRequest request) {
+    public UUID createProduct(@Valid ProductRequest request) {
         var product = mapper.toProduct(request);
         return repository.save(product).getId();
     }

@@ -20,6 +20,6 @@ public record ProductRequest(
         @Positive(message = "Available quantity should be positive")
         Integer availableQuantity,
         @NotNull(message = "Product category is required")
-        Long categoryId
+        UUID categoryId
 ) {
 }

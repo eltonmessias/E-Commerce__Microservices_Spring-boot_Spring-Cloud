@@ -13,7 +13,7 @@ public record ProductResponse(
         String description,
         BigDecimal price,
         Integer availableQuantity,
-        Long categoryId,
+        UUID categoryId,
         String categoryName
 ) {
 }
