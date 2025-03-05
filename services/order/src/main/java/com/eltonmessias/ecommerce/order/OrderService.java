@@ -1,0 +1,58 @@
+package com.eltonmessias.ecommerce.order;
+
+import com.eltonmessias.ecommerce.customer.CustomerClient;
+import com.eltonmessias.ecommerce.exception.BusinessException;
+import com.eltonmessias.ecommerce.orderline.OrderLineRequest;
+import com.eltonmessias.ecommerce.orderline.OrderLineService;
+import com.eltonmessias.ecommerce.product.ProductClient;
+import com.eltonmessias.ecommerce.product.PurchaseRequest;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.net.URI;
+
+@Service
+@RequiredArgsConstructor
+public class OrderService {
+
+    private final OrderMapper mapper;
+    private final CustomerClient customerClient;
+    private final ProductClient productClient;
+    private final OrderRepository repository;
+    private final OrderLineService orderLineService;
+
+    public OrderResponse createOrder(@Valid OrderRequest request) {
+
+        // todo check the customer ---> OpenFeign
+        var customer = this.customerClient.findCustomerById(request.customerId())
+                .orElseThrow(() -> new BusinessException("Cannot create order:: No customer found with the provided id:: " + request.customerId()));
+
+
+        // todo purchase the products ---> OpenFeign
+
+        var purchasedProducts = this.productClient.purchaseProducts(request.products());
+
+
+        // todo persist the order
+        var order = this.repository.save(mapper.toOrder(request));
+
+        // todo persist the orderLines
+        for (PurchaseRequest purchaseRequest : request.products()) {
+            orderLineService.saveOrderLine(
+                    new OrderLineRequest(
+                            null,
+                            order.getId(),
+                            purchaseRequest.productId(),
+                            purchaseRequest.quantity()
+                    )
+            );
+        }
+
+        // todo start the payment process
+
+        // todo send the order confirmation ---> notification-ms (kafka)
+
+      return null;
+    }
+}

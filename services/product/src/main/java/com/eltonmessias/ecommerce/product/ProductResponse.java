@@ -5,9 +5,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public record ProductResponse(
-        Long id,
+        UUID id,
         String name,
         String description,
         BigDecimal price,

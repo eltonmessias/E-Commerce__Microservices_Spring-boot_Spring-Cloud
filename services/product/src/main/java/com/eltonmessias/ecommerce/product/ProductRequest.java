@@ -7,9 +7,10 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public record ProductRequest(
-        Long id,
+        UUID id,
         @NotNull(message = "Product name is required")
         String name,
         @NotNull(message = "Product description is required")

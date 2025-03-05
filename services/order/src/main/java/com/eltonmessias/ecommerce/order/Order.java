@@ -14,6 +14,7 @@ import javax.crypto.SecretKey;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,8 +25,8 @@ import java.util.List;
 @Table(name = "customer_order")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String reference;
     private BigDecimal totalAmount;
     @Enumerated(EnumType.STRING)
