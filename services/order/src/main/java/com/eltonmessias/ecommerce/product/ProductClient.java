@@ -13,5 +13,5 @@ import java.util.Optional;
 )
 public interface ProductClient {
     @PostMapping("/purchase")
-    Optional<PurchaseResponse> purchaseProducts(@RequestBody List<PurchaseRequest> request);
+    List<PurchaseResponse> purchaseProducts(@RequestBody List<PurchaseRequest> request);
 }

@@ -2,6 +2,8 @@ package com.eltonmessias.ecommerce.order;
 
 import com.eltonmessias.ecommerce.customer.CustomerClient;
 import com.eltonmessias.ecommerce.exception.BusinessException;
+import com.eltonmessias.ecommerce.kafka.OrderConfirmation;
+import com.eltonmessias.ecommerce.kafka.OrderProducer;
 import com.eltonmessias.ecommerce.orderline.OrderLineRequest;
 import com.eltonmessias.ecommerce.orderline.OrderLineService;
 import com.eltonmessias.ecommerce.product.ProductClient;
@@ -11,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -21,8 +24,9 @@ public class OrderService {
     private final ProductClient productClient;
     private final OrderRepository repository;
     private final OrderLineService orderLineService;
+    private final OrderProducer orderProducer;
 
-    public OrderResponse createOrder(@Valid OrderRequest request) {
+    public UUID createOrder(@Valid OrderRequest request) {
 
         // todo check the customer ---> OpenFeign
         var customer = this.customerClient.findCustomerById(request.customerId())
@@ -52,7 +56,16 @@ public class OrderService {
         // todo start the payment process
 
         // todo send the order confirmation ---> notification-ms (kafka)
+        orderProducer.sendOrderConfirmation(
+                new OrderConfirmation(
+                        request.reference(),
+                        request.amount(),
+                        request.paymentMethod(),
+                        customer,
+                        purchasedProducts
+                )
+        );
 
-      return null;
+      return order.getId();
     }
 }
