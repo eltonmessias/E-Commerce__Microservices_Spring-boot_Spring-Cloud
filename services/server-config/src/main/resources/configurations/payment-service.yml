@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/payment
+    url: jdbc:postgresql://localhost:5432/payment_ecom_ms
     username: postgres
     password: messias8669
     driver-class-name: org.postgresql.Driver
