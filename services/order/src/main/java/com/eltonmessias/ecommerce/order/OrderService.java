@@ -6,6 +6,8 @@ import com.eltonmessias.ecommerce.kafka.OrderConfirmation;
 import com.eltonmessias.ecommerce.kafka.OrderProducer;
 import com.eltonmessias.ecommerce.orderline.OrderLineRequest;
 import com.eltonmessias.ecommerce.orderline.OrderLineService;
+import com.eltonmessias.ecommerce.payment.PaymentClient;
+import com.eltonmessias.ecommerce.payment.PaymentRequest;
 import com.eltonmessias.ecommerce.product.ProductClient;
 import com.eltonmessias.ecommerce.product.PurchaseRequest;
 import jakarta.validation.Valid;
@@ -25,6 +27,7 @@ public class OrderService {
     private final OrderRepository repository;
     private final OrderLineService orderLineService;
     private final OrderProducer orderProducer;
+    private final PaymentClient paymentClient;
 
     public UUID createOrder(@Valid OrderRequest request) {
 
@@ -54,6 +57,14 @@ public class OrderService {
         }
 
         // todo start the payment process
+        var paymentRequest = new PaymentRequest(
+                request.amount(),
+                request.paymentMethod(),
+                order.getId(),
+                order.getReference(),
+                customer
+        );
+        paymentClient.requestOrderPayment(paymentRequest);
 
         // todo send the order confirmation ---> notification-ms (kafka)
         orderProducer.sendOrderConfirmation(
