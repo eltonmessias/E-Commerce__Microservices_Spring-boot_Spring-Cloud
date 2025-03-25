@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/v1/orders")
 @RequiredArgsConstructor
@@ -17,7 +19,7 @@ public class OrderController {
     private final OrderService service;
 
     @PostMapping
-    private ResponseEntity<OrderResponse> createOrder(@RequestBody @Valid OrderRequest request) {
+    private ResponseEntity<UUID> createOrder(@RequestBody @Valid OrderRequest request) {
         return new ResponseEntity<>(service.createOrder(request), HttpStatus.CREATED);
     }
 
