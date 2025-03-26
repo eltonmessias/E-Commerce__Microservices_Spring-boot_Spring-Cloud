@@ -20,6 +20,7 @@
         <module name="notification" />
         <module name="product" />
         <module name="payment" />
+        <module name="gatewey" />
         <module name="order" />
         <module name="customer" />
       </profile>
@@ -33,6 +34,7 @@
       <module name="config-server" options="-parameters" />
       <module name="customer" options="-parameters" />
       <module name="discovery" options="-parameters" />
+      <module name="gatewey" options="-parameters" />
       <module name="notification" options="-parameters" />
       <module name="order" options="-parameters" />
       <module name="payment" options="-parameters" />
